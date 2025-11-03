@@ -29,4 +29,7 @@ public class PacienteController {
         List<Paciente> pacientes = service.listarTodos();
         return ResponseEntity.status(HttpStatus.OK).body(pacientes);
     }
+
+    //teste
+
 }
