@@ -2,6 +2,7 @@ package com.agendamento.agendamento.domain.service;
 
 import com.agendamento.agendamento.domain.entity.Paciente;
 import com.agendamento.agendamento.domain.repository.PacienteRepository;
+import com.agendamento.agendamento.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,20 @@ public class PacienteService {
     private final PacienteRepository repository;
 
     public Paciente salvar(Paciente paciente) {
+        boolean existeCpf = false;
+
+        // TODO: para validar se o cpf ja nao existe
+        Optional<Paciente> optPaciente = repository.findByCpf(paciente.getCpf());
+
+        if(optPaciente.isPresent()) {
+            if(!optPaciente.get().getId().equals(paciente.getId())) {
+                existeCpf = true;
+            }
+        }
+
+        if(existeCpf) {
+            throw new BusinessException("Cpf já cadastrado!");
+        }
 
         return repository.save(paciente);
     }

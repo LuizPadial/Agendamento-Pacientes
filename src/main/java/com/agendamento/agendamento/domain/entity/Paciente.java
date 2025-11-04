@@ -1,15 +1,15 @@
 package com.agendamento.agendamento.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @Builder
 @Table(name = "paciente")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Paciente {
 
     @Id

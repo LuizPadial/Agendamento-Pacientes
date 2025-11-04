@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -30,6 +31,28 @@ public class PacienteController {
         return ResponseEntity.status(HttpStatus.OK).body(pacientes);
     }
 
-    //teste
+    @GetMapping("/{id}")
+    public ResponseEntity<Paciente> buscarPorId(@PathVariable Long id) {
+        Optional<Paciente> optPaciente = service.buscarPorId(id);
+
+        if (optPaciente.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(optPaciente.get());
+    }
+    @PutMapping
+    public ResponseEntity<Paciente> alterar(@RequestBody Paciente paciente) {
+        Paciente pacienteSalvo =service.salvar(paciente);
+        return ResponseEntity.status(HttpStatus.OK).body(pacienteSalvo);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id){
+        service.deletar(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+
 
 }
